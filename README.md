@@ -13,7 +13,7 @@ This interactive application, built using HTML, CSS, JavaScript, and the CRUD me
 - HTML: Structure the content and layout of the app.
 - CSS: Style the app to enhance its visual appeal and user experience.
 - JavaScript: Implement interactive features and fetch data from the real weather API.
-- CRUD method: Enable efficient management of weather data.
+- CRUD Operation: Enable efficient management of weather data.
 - Real weather API: Retrieve accurate and up-to-date weather information.
 
 ## Installation
