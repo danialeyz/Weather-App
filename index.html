@@ -4,37 +4,49 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./src/style.css" />
+    <link rel="icon" href="./src/images/clouds.png" />
     <title>Weather app</title>
   </head>
   <body>
     <section class="card">
       <div class="search">
-        <input type="text" placeholder="Enter City name" spellcheck="false" />
-        <button><img src="./src/images/search.png" alt="search" /></button>
+        <input
+          id="city-name"
+          type="text"
+          placeholder="Enter City name"
+          spellcheck="false"
+        />
+        <button id="sreach-button">
+          <img src="./src/images/search.png" alt="search" />
+        </button>
       </div>
 
       <div class="weather">
-        <img src="./src/images/rain.png" alt="rain" class="weather-icon" />
-        <h1 class="temp">22°c</h1>
-        <h2 class="city">Tehran</h2>
+        <img src="src/images/clouds.png" alt="rain" class="weather-icon" />
+        <p class="weather-status"></p>
+        <h1 class="temp"></h1>
+        <h2 class="city"></h2>
 
         <div class="details">
           <div class="col">
             <img src="./src/images/humidity.png" alt="humidity" />
-            <div class="humidity">
-              <p>50%</p>
+            <div class="humidity-div">
+              <p class="humidity"></p>
               <p>Humidity</p>
             </div>
           </div>
 
           <div class="col">
             <img src="./src/images/wind.png" alt="wind" />
-            <div class="wind">
-              <p>15 km/h</p>
-              <p>wind</p>
+            <div>
+              <p class="wind">20</p>
+              <p>km/h</p>
             </div>
           </div>
         </div>
+      </div>
+      <div class="error">
+        <h1>The City name is invalid !</h1>
       </div>
     </section>
 
