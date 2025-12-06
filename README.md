@@ -1,7 +1,7 @@
 Welcome to the Weather App!😃👋🏼 
 This interactive application, built using HTML, CSS, JavaScript, and the Fetch API method, allows you to explore real-time weather updates from around the world. With a user-friendly interface and responsive design, you can easily access and manage weather data.
 
-![](https://github.com/danialeyz/Weather-App/blob/41d2e3e8b65e64164d62d24bb723eabed6c71ca0/Screen%20Shot%201402-08-04%20at%2004.16.21.png)
+![](https://github.com/danialeyz/Weather-App/blob/master/Screenshot%201404-09-15%20at%2017.19.06.png)
 
 ## Features
 
