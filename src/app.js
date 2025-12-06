@@ -1,6 +1,6 @@
-// Main variables
-const cityNameSearch = document.querySelector("#city-name");
-const serachButton = document.querySelector("#sreach-button");
+// DOM elements
+const cityNameInput = document.querySelector("#city-name");
+const searchButton = document.querySelector("#search-button");
 const cityName = document.querySelector(".city");
 const humidity = document.querySelector(".humidity");
 const temp = document.querySelector(".temp");
@@ -11,18 +11,63 @@ const weatherContent = document.querySelector(".weather");
 const errorStatus = document.querySelector(".error");
 
 // API
+// API
 const apiKey = "f7ee9f89bce70aee75c2392eace6df7c";
 const apiUrl =
   "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 
+// Helper: show / hide states
+function showWeather() {
+  weatherContent.classList.remove("hidden");
+  errorStatus.classList.remove("visible");
+  errorStatus.textContent = "";
+}
+
+function showError(message) {
+  weatherContent.classList.add("hidden");
+  errorStatus.textContent = message;
+  errorStatus.classList.add("visible");
+}
+
+function startLoading() {
+  weatherContent.classList.add("loading");
+}
+
+function stopLoading() {
+  weatherContent.classList.remove("loading");
+}
+
 // Getting data from API and placing that in DOM
 async function getWeather(city = "Tehran") {
-  let response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+  const trimmedCity = city.trim();
 
-  // checking if request status is succesfull or not
-  if (response.status === 200) {
-    let data = await response.json();
+  // avoid empty request
+  if (!trimmedCity) {
+    cityNameInput.classList.add("shake");
+    setTimeout(() => cityNameInput.classList.remove("shake"), 400);
+    return;
+  }
+
+  try {
+    startLoading();
+    showWeather(); // reset previous error state
+
+    const response = await fetch(
+      apiUrl + encodeURIComponent(trimmedCity) + `&appid=${apiKey}`
+    );
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        showError("City not found. Please check the spelling.");
+      } else {
+        showError("Something went wrong. Please try again.");
+      }
+      return;
+    }
+
+    const data = await response.json();
     const dataStatus = data.weather[0].main;
+
     // checking and changing weather status Icon
     if (dataStatus === "Clouds") {
       weatherIcon.src = "src/images/clouds.png";
@@ -36,31 +81,44 @@ async function getWeather(city = "Tehran") {
       weatherIcon.src = "src/images/snow.png";
     } else if (dataStatus === "Mist") {
       weatherIcon.src = "src/images/mist.png";
+    } else {
+      // default icon if the status is something else
+      weatherIcon.src = "src/images/clouds.png";
     }
 
     // adding data to DOM
-    cityName.innerHTML = data.name;
-    weatherStatus.innerHTML = dataStatus;
-    temp.innerHTML = Math.round(data.main.temp) + "°c";
-    humidity.innerHTML = data.main.humidity + "%";
-    wind.innerHTML = Math.round(data.wind.speed);
+    cityName.textContent = data.name;
+    weatherStatus.textContent = dataStatus;
+    temp.textContent = Math.round(data.main.temp) + "°C";
+    humidity.textContent = data.main.humidity + "%";
+    wind.textContent = Math.round(data.wind.speed); // km/h text is in HTML
 
-    // getting city name input empty
-    cityNameSearch.value = "";
-  } else {
-    weatherContent.style.display = "none";
-    errorStatus.style.display = "block";
+    // clear input
+    cityNameInput.value = "";
+    showWeather();
+  } catch (err) {
+    console.error(err);
+    showError("Network error. Please check your connection.");
+  } finally {
+    stopLoading();
   }
 }
 
-// Event listners
+// Event listeners
 
-// default
+// default load
 window.addEventListener("DOMContentLoaded", () => {
-  getWeather("Tehran"); // I will add the user live location feature
+  getWeather("Tehran"); // you can change the default city if you want
 });
 
-// after search
-serachButton.addEventListener("click", () => {
-  getWeather(cityNameSearch.value);
+// button click
+searchButton.addEventListener("click", () => {
+  getWeather(cityNameInput.value);
+});
+
+// Enter key in input
+cityNameInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    getWeather(cityNameInput.value);
+  }
 });

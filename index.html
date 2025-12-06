@@ -2,30 +2,42 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <link rel="stylesheet" href="./src/style.css" />
     <link rel="icon" href="./src/images/clouds.png" />
-    <title>Weather app</title>
+    <title>Weather App</title>
   </head>
   <body>
     <section class="card">
+      <header class="card-header">
+        <h1 class="app-title">Weather Now</h1>
+        <p class="app-subtitle">Instant forecast by city</p>
+      </header>
+
       <div class="search">
         <input
           id="city-name"
           type="text"
-          placeholder="Enter City name"
+          placeholder="Search city..."
           spellcheck="false"
-        />
-        <button id="sreach-button">
+          autocomplete="off" />
+        <button id="search-button" aria-label="Search city">
           <img src="./src/images/search.png" alt="search" />
         </button>
       </div>
 
+      <div class="helper-text">Try: London, Tokyo, New York...</div>
+
       <div class="weather">
-        <img src="src/images/clouds.png" alt="rain" class="weather-icon" />
+        <img
+          src="./src/images/clouds.png"
+          alt="weather icon"
+          class="weather-icon" />
         <p class="weather-status"></p>
-        <h1 class="temp"></h1>
         <h2 class="city"></h2>
+        <h1 class="temp"></h1>
 
         <div class="details">
           <div class="col">
@@ -39,15 +51,14 @@
           <div class="col">
             <img src="./src/images/wind.png" alt="wind" />
             <div>
-              <p class="wind">20</p>
+              <p class="wind"></p>
               <p>km/h</p>
             </div>
           </div>
         </div>
       </div>
-      <div class="error">
-        <h1>The City name is invalid !</h1>
-      </div>
+
+      <div class="error" role="alert"></div>
     </section>
 
     <script src="./src/app.js"></script>
